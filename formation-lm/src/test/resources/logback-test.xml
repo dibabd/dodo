@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+	
+	<contextName>softlsoengineerig-test</contextName>
+	
+	<property name="TEST_LOG_DIR" value="./logs" />
+	
+	<appender name="APP" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${TEST_LOG_DIR}/test-app-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<!-- or whenever the file size reaches 1MB -->
+        		<maxFileSize>10MB</maxFileSize>
+      		</timeBasedFileNamingAndTriggeringPolicy>
+      		<!-- keep 5 days' worth of history -->
+			<maxHistory>5</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger [%M] - %msg%n</pattern>
+		</encoder>
+	</appender>
+        
+    <appender name="SPRING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${TEST_LOG_DIR}/test-spring-%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<!-- or whenever the file size reaches 1MB -->
+        		<maxFileSize>10MB</maxFileSize>
+      		</timeBasedFileNamingAndTriggeringPolicy>
+      		<!-- keep 5 days' worth of history -->
+			<maxHistory>5</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+        
+        <appender name="DATA" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${TEST_LOG_DIR}/test-data--%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<!-- or whenever the file size reaches 1MB -->
+        		<maxFileSize>1MB</maxFileSize>
+      		</timeBasedFileNamingAndTriggeringPolicy>
+      		<!-- keep 5 days' worth of history -->
+			<maxHistory>5</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>[%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.hibernate" level="INFO" >
+            <appender-ref ref="DATA" />
+    </logger>
+<!--    
+    <logger name="org.hibernate.type" level="ALL" >
+            <appender-ref ref="DATA" />
+    </logger>
+    
+	<logger name="org.hibernate" level="DEBUG" >
+                 <appender-ref ref="DATA" />
+    </logger>
+-->
+	<logger name="org.springframework" level="INFO">
+                 <appender-ref ref="SPRING" />
+    </logger>
+    <logger name="fr.softlsoengineerig" level="DEBUG">
+                 <appender-ref ref="APP" />
+                 <appender-ref ref="STDOUT" />
+    </logger>	
+	<root level="INFO">
+            <!--
+		<appender-ref ref="APP" />
+                <appender-ref ref="DATA" />
+             -->
+		<appender-ref ref="STDOUT" />
+	</root>
+ 
+</configuration>

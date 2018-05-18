@@ -1,0 +1,8 @@
+/datasource.readme.txt
+/target/
+/logs/
+/.settings/
+/config/
+/.classpath
+/.project
+/.springBeans
